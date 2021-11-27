@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aisner <aisner@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgaladri <sgaladri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:21:09 by aisner            #+#    #+#             */
-/*   Updated: 2021/11/21 20:25:48 by aisner           ###   ########.fr       */
+/*   Updated: 2021/11/27 19:42:25 by sgaladri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@
 # endif
 
 /* Retrieves next line from given file descriptor */
-char	*get_next_line(int fd);
+char	*get_next_line(int fd); ///
 
 /* Returns length of a string */
-size_t	gnl_strlen(const char *s);
+size_t	gnl_strlen(const char *s); ///
 
 /* Retrieves index of first appearance of i in s, or -1 */
-int		gnl_strchr_i(const char *s, int c);
+int		gnl_strchr_i(const char *s, int c); ///
 
 /* Copies chars from src to dst ensuring null-termination */
 size_t	gnl_strlcpy(char *dst, const char *src, size_t size);
 
 /* Allocates enough memory to make a copy of s from start, copying len bytes */
-char	*gnl_substr(char const *s, unsigned int start, size_t len);
+char	*gnl_substr(char const *s, unsigned int start, size_t len); ///
 
 /* Concatenates two strings, ensuring null-termination */
 size_t	gnl_strlcat(char *dst, const char *src, size_t size);
@@ -50,5 +50,8 @@ char	*gnl_expand_buffer(char *buf, int fd);
 
 /* Performs a new read and returns read string */
 char	*gnl_newread(int fd);
+
+/* take the string in some other cases */
+char    *my_GNL(int fd);
 
 #endif
