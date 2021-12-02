@@ -6,7 +6,7 @@
 /*   By: sgaladri <sgaladri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:21:09 by aisner            #+#    #+#             */
-/*   Updated: 2021/11/27 19:42:25 by sgaladri         ###   ########.fr       */
+/*   Updated: 2021/12/02 16:23:31 by sgaladri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ char	*gnl_expand_buffer(char *buf, int fd);
 char	*gnl_newread(int fd);
 
 /* take the string in some other cases */
-char    *my_GNL(int fd);
+char    *my_GNL(int fd, char *l, char *s);
 
 #endif

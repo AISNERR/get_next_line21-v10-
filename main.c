@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aisner <aisner@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgaladri <sgaladri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 20:48:15 by aisner            #+#    #+#             */
-/*   Updated: 2021/11/23 20:48:24 by aisner           ###   ########.fr       */
+/*   Updated: 2021/12/02 16:05:13 by sgaladri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../get_next_line.h"
+#include "get_next_line.h"
 #include <stdio.h>
 
 int	main(void)
@@ -20,8 +20,7 @@ int	main(void)
 	char	*line[4096];
 
 	i = 1;
-	fd_1 = open("tests/J. K. Rowling - Harry Potter 1 - Sorcerer's Stone.txt", \
-					O_RDONLY);
+	fd_1 = open("text.txt", O_RDONLY);
 	while (1)
 	{
 		line[fd_1] = get_next_line(fd_1);
