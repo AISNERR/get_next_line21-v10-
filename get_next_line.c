@@ -6,7 +6,7 @@
 /*   By: sgaladri <sgaladri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:29 by sgaladri          #+#    #+#             */
-/*   Updated: 2021/12/02 16:31:31 by sgaladri         ###   ########.fr       */
+/*   Updated: 2021/12/03 22:19:14 by sgaladri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ char    *get_next_line(int fd) // fd file descriptor
     if (fd < 0 || fd > 2048 || BUFFER_SIZE < 0)
         return (NULL);
     line = NULL;
-    if (buf[fd] == NULL)
-        return (NULL);
     if (gnl_strchr_i(buf[fd], '\n') == -1)
     {
         initial_len = gnl_strlen(buf[fd]);
@@ -31,22 +29,23 @@ char    *get_next_line(int fd) // fd file descriptor
         if (initial_len == gnl_strlen(buf[fd]) && buf[fd])
             line =  gnl_substr(buf[fd], 0, gnl_strlen(buf[fd]));   // range of the line
     }
-    else if ((!line && gnl_strchr_i(buf[fd], '\n') != -1) || line)
-        line = my_GNL(fd, line, buf[fd]);
-        return (line); 
-    return (get_next_line(fd));
+	if (buf[fd] == NULL)
+        return (NULL);
+    if ((!line && gnl_strchr_i(buf[fd], '\n') != -1))
+    	line = my_GNL(fd, line, buf);
+	if (line)
+	{
+		buf[fd] = gnl_shrink_buffer(buf[fd], line);
+		return (line);
+	}
+	return (get_next_line(fd));
 }
 
-char    *my_GNL(int fd, char *l, char *s)
+char    *my_GNL(int fd, char *l, char **s)
 {
     if (!l && gnl_strchr_i(s[fd], '\n') != -1)
 		l = gnl_substr(s[fd], 0, gnl_strchr_i(s[fd], '\n') + 1);
-        return (l);
-	if (l)
-	{
-		s[fd] = gnl_shrink_buffer(s[fd], l);
-		return (l);
-	}
+	return (l);
 }
 
 char	*gnl_shrink_buffer(char *buf, char *line)

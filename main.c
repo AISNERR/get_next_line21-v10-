@@ -6,7 +6,7 @@
 /*   By: sgaladri <sgaladri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 20:48:15 by aisner            #+#    #+#             */
-/*   Updated: 2021/12/02 16:05:13 by sgaladri         ###   ########.fr       */
+/*   Updated: 2021/12/03 22:28:45 by sgaladri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(void)
 {
 	int		fd_1;
 	int		i;
-	char	*line[4096];
+	char	*line[2048];
 
 	i = 1;
 	fd_1 = open("text.txt", O_RDONLY);
