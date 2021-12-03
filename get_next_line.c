@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_copy.c                               :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgaladri <sgaladri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:29 by sgaladri          #+#    #+#             */
-/*   Updated: 2021/12/03 22:19:14 by sgaladri         ###   ########.fr       */
+/*   Updated: 2021/12/03 23:14:52 by sgaladri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char    *get_next_line(int fd) // fd file descriptor 
+char	*get_next_line(int fd)
 {
-    static char *buf[2048];
-    char    *line;
-    size_t  initial_len;
+	static char	*buf[2048];
+	char		*line;
+	size_t		initial_len;
 
-    if (fd < 0 || fd > 2048 || BUFFER_SIZE < 0)
-        return (NULL);
-    line = NULL;
-    if (gnl_strchr_i(buf[fd], '\n') == -1)
-    {
-        initial_len = gnl_strlen(buf[fd]);
-        buf[fd] = gnl_expand_buffer(buf[fd], fd);
-        if (initial_len == gnl_strlen(buf[fd]) && buf[fd])
-            line =  gnl_substr(buf[fd], 0, gnl_strlen(buf[fd]));   // range of the line
-    }
+	if (fd < 0 || fd > 2048 || BUFFER_SIZE < 0)
+		return (NULL);
+	line = NULL;
+	if (gnl_strchr_i(buf[fd], '\n') == -1)
+	{
+		initial_len = gnl_strlen(buf[fd]);
+		buf[fd] = gnl_expand_buffer(buf[fd], fd);
+		if (initial_len == gnl_strlen(buf[fd]) && buf[fd])
+			line = gnl_substr(buf[fd], 0, gnl_strlen(buf[fd]));
+	}
 	if (buf[fd] == NULL)
-        return (NULL);
-    if ((!line && gnl_strchr_i(buf[fd], '\n') != -1))
-    	line = my_GNL(fd, line, buf);
+		return (NULL);
+	if ((!line && gnl_strchr_i(buf[fd], '\n') != -1))
+		line = my_GNL(fd, line, buf);
 	if (line)
 	{
 		buf[fd] = gnl_shrink_buffer(buf[fd], line);
@@ -41,9 +41,9 @@ char    *get_next_line(int fd) // fd file descriptor
 	return (get_next_line(fd));
 }
 
-char    *my_GNL(int fd, char *l, char **s)
-{
-    if (!l && gnl_strchr_i(s[fd], '\n') != -1)
+char	*my_GNL(int fd, char *l, char **s)
+{	
+	if (!l && gnl_strchr_i(s[fd], '\n') != -1)
 		l = gnl_substr(s[fd], 0, gnl_strchr_i(s[fd], '\n') + 1);
 	return (l);
 }
