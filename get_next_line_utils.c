@@ -6,13 +6,13 @@
 /*   By: aisner <aisner@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:26:45 by aisner            #+#    #+#             */
-/*   Updated: 2021/11/21 20:27:04 by aisner           ###   ########.fr       */
+/*   Updated: 2021/12/24 12:07:03 by aisner           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	gnl_strlen(const char *s)
+size_t	gnl_length(const char *s)
 {
 	int	count;
 
@@ -32,7 +32,7 @@ char	*gnl_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	s_len = gnl_strlen(s);
+	s_len = gnl_length(s);
 	i = 0;
 	if (len > s_len)
 		len = s_len;
@@ -61,7 +61,7 @@ size_t	gnl_strlcpy(char *dst, const char *src, size_t size)
 	i = 0;
 	if (src == NULL)
 		return (0);
-	size_src = gnl_strlen(src);
+	size_src = gnl_length(src);
 	if ((int)size < 0)
 		size = size_src + 1;
 	if (size >= 2 && size_src != 0)
@@ -80,22 +80,20 @@ size_t	gnl_strlcpy(char *dst, const char *src, size_t size)
 	return (size_src);
 }
 
-int	gnl_strchr_i(const char *s, int c)
+int	gnl_strchar(const char *s, int c)
 {
-	unsigned char	c_unsigned;
-	int				i;
+	int	i;
 
 	i = 0;
 	if (!s)
 		return (-1);
-	c_unsigned = (unsigned char)c;
 	while (s[i] != '\0')
 	{
-		if (s[i] == c_unsigned)
+		if (s[i] == c)
 			return (i);
 		i++;
 	}
-	if (c_unsigned == '\0')
+	if (c == '\0')
 		return (i);
 	return (-1);
 }
@@ -105,10 +103,10 @@ size_t	gnl_strlcat(char *dst, const char *src, size_t size)
 	char			*ptr;
 	unsigned int	i;
 
-	if (size < gnl_strlen(dst))
-		return (gnl_strlen(src) + size);
-	ptr = dst + gnl_strlen(dst);
-	i = gnl_strlen(dst);
+	if (size < gnl_length(dst))
+		return (gnl_length(src) + size);
+	ptr = dst + gnl_length(dst);
+	i = gnl_length(dst);
 	while (i < size - 1 && *src != '\0' && size >= 2)
 	{
 		*ptr = *src;
@@ -118,5 +116,5 @@ size_t	gnl_strlcat(char *dst, const char *src, size_t size)
 	}
 	if (size != 0)
 		*ptr = '\0';
-	return (gnl_strlen(dst) + gnl_strlen(src));
+	return (gnl_length(dst) + gnl_length(src));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgaladri <sgaladri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aisner <aisner@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:21:09 by aisner            #+#    #+#             */
-/*   Updated: 2021/12/03 23:21:27 by sgaladri         ###   ########.fr       */
+/*   Updated: 2021/12/24 11:33:51 by aisner           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+#include <stdio.h>
 
 # ifndef BUFFER_SIZE
 
@@ -25,8 +26,8 @@
 # endif
 
 char	*get_next_line(int fd);
-size_t	gnl_strlen(const char *s);
-int		gnl_strchr_i(const char *s, int c);
+size_t	gnl_length(const char *s);
+int     gnl_strchar(const char *s, int c);
 size_t	gnl_strlcpy(char *dst, const char *src, size_t size);
 char	*gnl_substr(char const *s, unsigned int start, size_t len);
 size_t	gnl_strlcat(char *dst, const char *src, size_t size);

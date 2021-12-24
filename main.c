@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgaladri <sgaladri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aisner <aisner@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 20:48:15 by aisner            #+#    #+#             */
-/*   Updated: 2021/12/03 22:28:45 by sgaladri         ###   ########.fr       */
+/*   Updated: 2021/12/24 10:08:45 by aisner           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	main(void)
 {
 	int		fd_1;
 	int		i;
-	char	*line[2048];
+	char	*line[42];
 
-	i = 1;
+	i = 3;
 	fd_1 = open("text.txt", O_RDONLY);
 	while (1)
 	{

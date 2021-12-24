@@ -6,7 +6,7 @@
 #    By: aisner <aisner@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/23 08:12:25 by aisner            #+#    #+#              #
-#    Updated: 2021/12/23 13:31:50 by aisner           ###   ########.fr        #
+#    Updated: 2021/12/24 11:37:04 by aisner           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = GNL
 # Source files
 
 MANDOTORY_FILES  =  get_next_line.c	get_next_line_utils.c main.c
-BONUS  =  get_next_line_bonus.c	get_next_line_utils_bonus.c main.c
+BONUS  =  get_next_line_bonus.c	get_next_line_utils_bonus.c main01.c
 
 OBJ = $(MANDOTORY_FILES:.c=.o)  
 OBJ2 = $(BONUS:.c=.o)

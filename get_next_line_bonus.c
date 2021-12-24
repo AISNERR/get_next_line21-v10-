@@ -1,114 +1,83 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aisner <aisner@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/02 17:16:44 by llima-ce          #+#    #+#             */
+/*   Updated: 2021/12/24 12:18:34 by aisner           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
-t_list	*create_buf(int fd)
+static void	free_ptr(char **ptr)
 {
-	int		i;
-	t_list	*new;
-
-	i = 0;
-	if (!(new = malloc(sizeof(t_list))))
-		return (NULL);
-	new->fd = fd;
-	new->next = NULL;
-	while (i < BUFFER_SIZE + 1)
-		new->buf[i++] = 0;
-	return (new);
+	if (*ptr != NULL)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }
 
-int	del_buf(t_list **lst, int fd)
+char	*read_text(char **buffer_lists, char *buffer, int fd)
 {
-	t_list *prev;
-	t_list *cpy;
+	ssize_t	bytes_read;
+	char	*tmp;
+	char	*res;
 
-	printf("fd deleted\n");
-	prev = *lst;
-	if ((*lst)->fd == fd)
+	res = ft_strchr(*buffer_lists, '\n');
+	if (res != NULL)
+		return (concatenation(res - *buffer_lists + 1, buffer_lists, TRUE));
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_read <= 0)
+		return (concatenation(bytes_read, buffer_lists, FALSE));
+	buffer[bytes_read] = 0;
+	tmp = ft_strjoin(*buffer_lists, buffer);
+	free_ptr(buffer_lists);
+	*buffer_lists = tmp;
+	return (read_text(buffer_lists, buffer, fd));
+}
+
+char	*concatenation(int end, char **buffer_lists, t_bool fl)
+{
+	char	*res;
+	char	*tmp;
+
+	tmp = NULL;
+	if (end <= 0 && fl == FALSE)
 	{
-		(*lst) = (*lst)->next;
-		free(prev);
-		return (0);
-	}
-	cpy = *lst;
-	cpy = cpy->next;
-	while (cpy)
-	{
-		if (cpy->fd == fd)
+		if (**buffer_lists == '\0')
 		{
-			prev->next = cpy->next;
-			free(cpy);
-			return (0);
-		}
-		prev = cpy;
-		cpy = cpy->next;
-	}
-	return (0);
-}
-
-char	*get_buffer(t_list **lst, int fd)
-{
-	t_list *cpy;
-
-	if (!(*lst))
-	{
-		if (!((*lst) = create_buf(fd)))
+			free_ptr(buffer_lists);
 			return (NULL);
-		return ((*lst)->buf);
-	}
-	cpy = *lst;
-	while (cpy)
-	{
-		if (cpy->fd == fd)
-			return (cpy->buf);
-		else if (!cpy->next)
-			break ;
-		else
-			cpy = cpy->next;
-	}
-	if (!(cpy->next = create_buf(fd)))
-		return (NULL);
-	return (cpy->next->buf);
-}
-
-int		scan_buf(char **line, char *buf, ssize_t size, int check)
-{
-	int i;
-
-	i = 0;
-	if (size == -1)
-		return (-1);
-	if ((i = check_line(line, buf, size)) == -1)
-		return (-1);
-	if (buf[i] == '\n')
-		return (shift_buf(buf, i + 1, size, 0));
-	if ((!size && **line))
-		return (shift_buf(buf, i + 1, size, check));
-	return (2);
-}
-
-int		get_next_line(int fd, char **line)
-{
-	static	t_list	*lst = NULL;
-	char			*buf;
-	ssize_t			size;
-	int				ret;
-	int				check;
-
-	if (fd < 0 || !(*line = malloc(sizeof(char))) || BUFFER_SIZE <= 0)
-		return (-1);
-	(*line)[0] = 0;
-	buf = get_buffer(&lst, fd);
-	size = 1;
-	while (size > 0)
-	{
-		check = 0;
-		if ((size = ft_strlen(buf)) == 0)
-		{
-			size = read(fd, buf, BUFFER_SIZE);
-			check = 1;
 		}
-		if ((ret = scan_buf(line, buf, size, check)) < 2)
-			return (ret == 0 ? del_buf(&lst, fd) : ret);
+		res = *buffer_lists;
+		*buffer_lists = NULL;
+		return (res);
 	}
-	return (del_buf(&lst, fd));
+	tmp = ft_substr(*buffer_lists, end, BUFFER_SIZE);
+	res = *buffer_lists;
+	res[end] = 0;
+	*buffer_lists = tmp;
+	return (res);
+}
+
+char	*get_next_line(int fd)
+{
+	static char		*buffer_lists[MAX_FD + 1];
+	char			*line;
+	char			*res;
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > MAX_FD)
+		return (NULL);
+	line = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (line == NULL)
+		return (NULL);
+	if (!buffer_lists[fd])
+		buffer_lists[fd] = ft_strdup("");
+	res = read_text(&buffer_lists[fd], line, fd);
+	free_ptr(&line);
+	return (res);
 }
